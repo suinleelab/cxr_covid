@@ -39,7 +39,7 @@ Organize the downloaded data as follows:
                 (subdirectories containing png images and json metadata)
 
 ### ChestX-ray14
-Download the files listed above under ./data/ChestX-ray14/. You will need to download and extract all of the zip files from the images directory and organize all of the images into a single directory (./data/Chestx-ray14/images). Note that some file names may change (e.g., Data_Entry_2017.csv may have been renamed to Data_Entry_2017_v2020.csv depending on your download date. It is important that you rename files to match the above scheme.
+Download the files listed above under ./data/ChestX-ray14/. You will need to download and extract all of the zip files from the images directory and organize all of the images into a single directory (./data/Chestx-ray14/images). Note that some file names may change (e.g., Data_Entry_2017.csv may have been renamed to Data_Entry_2017_v2020.csv depending on your download date). It is important that you rename files to match the above scheme.
 
 ### Cohen et al. Covid-Chestxray-Dataset (a.k.a. "GitHub-COVID" in our manuscript)
 Simply clone the repository and rename it as ./data/GitHub-COVID
@@ -60,6 +60,21 @@ Since the json files that contain metadata regarding the BIMCV-COVID-19+ radiogr
 For improved data loading performance, you may optionally create an HDF5 file for each image repository.
 
     cd ./data
-    python make_h5.py 
+    python make_h5.py -i INPUT_DIR -o output_file
+
+Organize the output files as follows:
+
+    data/
+        ChestX-ray14/
+            chestxray14.h5
+        PadChest/
+            padchest.h5
+        BIMCV-COVID-19
+            BIMCV-COVID-19.h5
+
+You will NEED to make an HDF5 for at least the BIMCV-COVID-19+ repository.
+
+Note that due to its small size, we do not provide scripts for loading the GitHub-COVID from HDF5 files. 
 
 ## Training the models
+After setting up the datasets, train models using the "train_covid.py" script. This script works via the command line; for more information on using the script, run "python train_covid.py --help". 
