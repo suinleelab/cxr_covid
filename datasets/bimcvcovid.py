@@ -140,12 +140,12 @@ class BIMCVCOVIDDataset(H5Dataset, CXRDataset):
             padchesttochestxray14['viral pneumonia'] = 'COVID-19'
             padchesttochexpert['viral pneumonia'] = 'COVID-19'
         self.report_regex = re.compile('ses-E\d+')
-        self.datapath = 'data/padchest-covid'
+        self.datapath = 'data/BIMCV-COVID-19'
         self.labelpath = 'derivatives/labels/labels_covid19_posi.tsv'
         self.unknown_label_path = 'datasets/bimcv_covid_unknown_labels.txt'
         self.labeldf = pandas.read_csv(os.path.join(self.datapath, self.labelpath), delimiter='\t')
-        self.h5path = 'data/padchest-covid/padchest-covid.h5'
-        self.df = pandas.read_csv(os.path.join(self.datapath, 'padchest-covid.csv'))
+        self.h5path = 'data/BIMCV-COVID-19/BIMCV-COVID-19.h5'
+        self.df = pandas.read_csv(os.path.join(self.datapath, 'BIMCV-COVID-19.csv'))
         # Filter images with windowing data
         self.df = self.df.query('window_center == window_center | lut == lut') # remove NaN
         self.df.lut = self.df.lut.apply(lambda x: eval(x) if isinstance(x,str) else x) # strings to LUT lists

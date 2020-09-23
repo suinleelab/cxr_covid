@@ -43,7 +43,7 @@ def save_png_bytes(h5handle, path, image):
     image_byte_array = io.BytesIO()
     image.save(image_byte_array, format='PNG')
     image_bytes = image_byte_array.getvalue()
-    # voodoo
+    # magic
     image_raw_np = numpy.asarray(image_bytes)
     h5handle['images'].create_dataset(path, data=image_raw_np)
 
