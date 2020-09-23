@@ -89,7 +89,7 @@ ENFORCE_LATERAL = [
         ]
 
 def main():
-    datapath = 'padchest-covid'
+    datapath = 'BIMCV-COVID-19'
     patientdf = pandas.read_csv(os.path.join(datapath, 'participants.tsv'),
                               sep='\t')
 
@@ -178,25 +178,8 @@ def main():
                             series_description = series_description.upper()
                             series_descriptions.add(series_description)
                             projection = series_description_map[series_description]
-                            #if 'AP HORIZONTAL' in series_description:
-                            #    projection = 'AP HORIZONTAL'
-                            #if 'AP' in series_description and not 'LAT' in series_description and not 'PA' in series_description:
-                            #    projection = 'AP'
-                            #elif 'PA' in series_description and not 'LAT' in series_description and not 'AP' in series_description:
-                            #    projection = 'PA'
-                            #elif 'LAT' in series_description and not 'PA' in series_description and not 'AP' in series_description:
-                            #    projection = 'LAT'
-                            #elif 'PORTATIL' in series_description:
-                            #    projection = 'AP'
-                            #elif 'LAT' in series_description and 'PA' in series_description:
-                            #    projection = 'UNK'
-                            #elif 'LAT' in series_description and 'AP' in series_description:
-                            #    projection = 'UNK'
-                            #elif 'AP' in series_description and 'PA' in series_description:
-                            #    projection = 'UNK'
-                            #else:
-                            #    projection = 'UNK'
                             entry['projection'] = projection
+
                             # these images are manually set to lateral
                             if path.strip() in ENFORCE_LATERAL:
                                 print("enforcing lateral projection for {:s}".format(path))
@@ -204,7 +187,7 @@ def main():
                             data[idx] = entry
 
     df = pandas.DataFrame.from_dict(data, orient='index')
-    df.to_csv('padchest-covid.csv')
+    df.to_csv(os.path.join(datapath, 'bimcv-covid-19.csv'))
     print("# of skipped files: ", skipped_files)
     print(series_descriptions)
 
