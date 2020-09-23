@@ -1,5 +1,14 @@
 #!/usr/bin/env python
-# train.py
+#
+# train_covid.py
+#
+# Run ``python train_covid.py -h'' for information on using this script.
+#
+
+import os
+import sys
+
+import argparse
 import numpy
 import sklearn.metrics
 
@@ -8,8 +17,7 @@ from datasets import ChestXray14H5Dataset, PadChestH5Dataset
 from datasets import GitHubCOVIDDataset, BIMCVCOVIDDataset
 from datasets import DomainConfoundedDataset
 
-import os
-import sys
+
 
 def _find_index(ds, desired_label):
     desired_index = None
@@ -161,32 +169,34 @@ def test_bimcvpadchest(seed, alexnet=False, freeze_features=False):
     print("external auroc: ", external_auroc)
 
 def main():
+    parser = argparse.ArgumentParser(description='Training script for COVID-19 '
+            'classifiers. Make sure that datasets have been set up before '
+            'running this script. See the README file for more information.')
+    parser.add_argument('--dataset', dest='dataset', type=int, default=1, required=False,
+                        help='The dataset number on which to train. Choose "1" or "2".')
+    parser.add_argument('--seed', dest='seed', type=int, default=30493, required=False,
+                        help='The random seed used to generate train/val/test splits')
+    parser.add_argument('--network', dest='network', type=str, default='densenet121', required=False,
+                        help='The network type. Choose "densenet121", "logistic", or "alexnet".')
+    parser.add_argument('--device-index', dest='deviceidx', type=int, default=None, required=False,
+                        help='The index of the GPU device to use. If None, use the default GPU.')
+    args = parser.parse_args()
+
     for dirname in ['checkpoints', 'logs']:
         if not os.path.isdir(dirname):
             os.mkdir(dirname)
-    gpunum = int(sys.argv[1])
-    os.environ["CUDA_VISIBLE_DEVICES"] = "{:d}".format(gpunum)
-    for seed in [30493, 30494, 30495, 30496, 30497]:
-        # gpu 1
-        if gpunum==1: train_githubcxr14(seed)
 
-        # gpu 2
-        if gpunum==2: train_githubcxr14(seed, alexnet=True)
+    if args.deviceidx is not None:
+        os.environ["CUDA_VISIBLE_DEVICES"] = "{:d}".format(args.deviceidx)
 
-        # gpu 3
-        if gpunum==3: train_githubcxr14(seed, freeze_features=True)
-
-        # gpu 4
-        if gpunum==4: train_bimcvpadchest(seed)
-
-        # gpu 5
-        if gpunum==5: train_bimcvpadchest(seed, alexnet=True)
-
-        # gpu 6
-        if gpunum==6: train_bimcvpadchest(seed, freeze_features=True)
-
-        #test_githubcxr14(seed)
-        #test_bimcvpadchest(seed)
+    if args.dataset == 1:
+        train_githubcxr14(args.seed, 
+                alexnet=(args.network.lower() == 'alexnet'), 
+                freeze_features=(args.network.lower() == 'logistic'))
+    if args.dataset == 2:
+        train_bimcvpadchest(args.seed, 
+                alexnet=(args.network.lower() == 'alexnet'), 
+                freeze_features=(args.network.lower() == 'logistic'))
 
 if __name__ == "__main__":
     main()
