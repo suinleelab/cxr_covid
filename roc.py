@@ -24,8 +24,6 @@ import matplotlib.pyplot as pyplot
 
 import os
 import sys
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
-
 
 #################################### Options ##################################
 # Modify to match the output files from your training procedure. The random
