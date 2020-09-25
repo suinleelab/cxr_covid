@@ -167,7 +167,7 @@ class ChestXray14Dataset(CXRDataset):
         self.fold = fold
 
         self.transform = self._transforms[fold]
-        self.path_to_images = "data/ChestX-ray14/images_224x224/"
+        self.path_to_images = "data/ChestX-ray14/images/"
         self.has_appa = False
         self.pneumo = pneumo
 
