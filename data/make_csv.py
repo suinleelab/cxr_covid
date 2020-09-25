@@ -96,7 +96,6 @@ def main():
     data = {}
     series_descriptions = set()
     idx = -1 
-    skipped_files = 0
     for _, row in patientdf.iterrows():
         subject = row.participant 
         modalities = row.modality_dicom
@@ -187,9 +186,7 @@ def main():
                             data[idx] = entry
 
     df = pandas.DataFrame.from_dict(data, orient='index')
-    df.to_csv(os.path.join(datapath, 'bimcv-covid-19.csv'))
-    print("# of skipped files: ", skipped_files)
-    print(series_descriptions)
+    df.to_csv(os.path.join(datapath, 'BIMCV-COVID-19.csv'))
 
 if __name__ == "__main__":
     main()
