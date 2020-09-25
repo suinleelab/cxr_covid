@@ -167,11 +167,11 @@ class GitHubCOVIDDataset(CXRDataset):
         '''
 
         self.transform = self._transforms[fold]
-        self.path_to_images = "data/covid-chestxray-dataset/images/"
+        self.path_to_images = "data/GitHub-COVID/images/"
         self.has_appa = False
 
         # Load files containing labels, and perform train/valid split if necessary
-        metadatapath = "data/covid-chestxray-dataset/metadata.csv"
+        metadatapath = "data/GitHub-COVID/metadata.csv"
         self.df = pandas.read_csv(metadatapath)
         self.df = _convert_dataframe(self.df)
         
