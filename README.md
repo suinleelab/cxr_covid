@@ -58,7 +58,7 @@ Since the json files that contain metadata regarding the BIMCV-COVID-19+ radiogr
 
 ### HDF5 Files
 
-For improved data loading performance, create HDF5 files for the image repositories. Note that due to its small size, we do not provide scripts for loading the GitHub-COVID from HDF5 files.
+For improved data loading performance, create HDF5 files for the image repositories. Note that due to its small size, we do not provide scripts for loading the GitHub-COVID dataset from HDF5 files.
 
 To generate the files, run the following commands:
 
