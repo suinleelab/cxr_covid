@@ -30,7 +30,7 @@ def find_images(parentpath):
     (strings).
     '''
     paths = []
-    for triple in os.walk(parentpath):
+    for triple in os.walk(parentpath, followlinks=True):
         for path in triple[-1]:
             if is_image(path):
                 paths.append(os.path.join(triple[0], path))
@@ -67,8 +67,8 @@ def convert_dataset():
     print("\n")
     img_paths = find_images(args.imagedir)
     for ip in tqdm.tqdm(img_paths):
-        if not ip in PADCHEST_CORRUPTED:
-            path = os.path.join(os.path.abspath(args.imagedir), ip) 
+        if not os.path.basename(ip) in PADCHEST_CORRUPTED:
+            path = os.path.join(os.path.abspath(args.imagedir), ip.strip('/')) 
             image = Image.open(path)
             # downsample
             image = transform(image)
