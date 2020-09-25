@@ -32,6 +32,7 @@ Organize the downloaded data as follows:
             images/
                 (many image files)
         BIMCV-COVID-19
+            participants.tsv
             derivatives/
                 labels/
                     labels_covid19_posi.tsv
@@ -57,12 +58,16 @@ Since the json files that contain metadata regarding the BIMCV-COVID-19+ radiogr
 
 ### HDF5 Files
 
-For improved data loading performance, you may optionally create an HDF5 file for each image repository.
+For improved data loading performance, create an HDF5 files for the image repositories. Note that due to its small size, we do not provide scripts for loading the GitHub-COVID from HDF5 files.
+
+To generate the files, run the following commands:
 
     cd ./data
-    python make_h5.py -i INPUT_DIR -o output_file
+    python make_h5.py -i ChestX-ray14 -o ChestX-ray14/chestxray14.h5
+    python make_h5.py -i PadChest -o PadChest/padchest.h5
+    python make_h5.py -i BIMCV-COVID-19 -o BIMCV-COVID-19/BIMCV-COVID-19.h5 
 
-Organize the output files as follows:
+Check to make sure the output files are organized as follows:
 
     data/
         ChestX-ray14/
@@ -71,10 +76,6 @@ Organize the output files as follows:
             padchest.h5
         BIMCV-COVID-19
             BIMCV-COVID-19.h5
-
-You will NEED to make an HDF5 for at least the BIMCV-COVID-19+ repository.
-
-Note that due to its small size, we do not provide scripts for loading the GitHub-COVID from HDF5 files. 
 
 ## Training the models
 After setting up the datasets, train models using the "train_covid.py" script. This script works via the command line; for more information on using the script, run "python train_covid.py --help". 
