@@ -1,5 +1,5 @@
-# cxr_covid
-Code for paper "AI for radiographic COVID-19 detection selects shortcuts over signal"<br/>
+# AI for radiographic COVID-19 detection selects shortcuts over signal
+Code for paper "AI for radiographic COVID-19 detection selects shortcuts over signal". Please read our preprint at the following link: [https://doi.org/10.1101/2020.09.13.20193565](https://doi.org/10.1101/2020.09.13.20193565)<br/>
 <br/>
 Datasets can be downloaded at the following links:<br/>
 **Dataset I**<br/>
