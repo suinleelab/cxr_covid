@@ -40,16 +40,16 @@ Organize the downloaded data as follows:
                 (subdirectories containing png images and json metadata)
 
 ### ChestX-ray14
-Download the files listed above under ./data/ChestX-ray14/. You will need to download and extract all of the zip files from the images directory and organize all of the images into a single directory (./data/Chestx-ray14/images). Note that some file names may change (e.g., Data_Entry_2017.csv may have been renamed to Data_Entry_2017_v2020.csv depending on your download date). It is important that you rename files to match the above scheme.
+Download the files listed above under `./data/ChestX-ray14/.` You will need to download and extract all of the zip files from the images directory and organize all of the images into a single directory (`./data/Chestx-ray14/images`). Note that some file names may change (e.g., `Data_Entry_2017.csv` may have been renamed to `Data_Entry_2017_v2020.csv` depending on your download date). It is important that you rename files to match the above scheme.
 
 ### Cohen et al. Covid-Chestxray-Dataset (a.k.a. "GitHub-COVID" in our manuscript)
-Simply clone the repository and rename it as ./data/GitHub-COVID
+Simply clone the repository and rename it as `./data/GitHub-COVID`.
 
 ### PadChest
-Download each of the image zip files as well as the csv file containing metadata. Extract all of the images and organize them into a single directory at ./data/PadChest/images.
+Download each of the image zip files as well as the csv file containing metadata. Extract all of the images and organize them into a single directory at `./data/PadChest/images`.
 
 ### BIMCV-COVID19+
-Download all of the zip files, which contain both the images and metadata. Place all of the zip files in ./data/BIMCV-COVID-19 and extract them. You should end up with a subdirectory named "derivatives" which includes some of the metadata, as well as many folders named "sub-SXXXXX" (where XXXXX is a number) which contain the images and more metadata.
+Download all of the zip files, which contain both the images and metadata. Place all of the zip files in `./data/BIMCV-COVID-19` and extract them. You should end up with a subdirectory named "derivatives" which includes some of the metadata, as well as many folders named "sub-SXXXXX" (where XXXXX is a number) which contain the images and more metadata.
 
 Since the json files that contain metadata regarding the BIMCV-COVID-19+ radiographs can be unwieldy to work with, parse them to create a csv file that contains key metadata:
 
@@ -78,4 +78,7 @@ Check to make sure the output files are organized as follows:
             BIMCV-COVID-19.h5
 
 ## Training the models
-After setting up the datasets, train models using the "train_covid.py" script. This script works via the command line; for more information on using the script, run "python train_covid.py --help". 
+After setting up the datasets, train models using the `train_covid.py` script. This script works via the command line; for more information on using the script, run `python train_covid.py --help`. 
+
+## Evaluating the models
+Once you have trained models on both datasets, evaluate the models using the script `roc.py`. This will calculate receiver operating characteristic curves for both internal and external test data. First, edit the "options" section of `roc.py` to match the output paths from model training; the checkpoint files may be found in `./checkpoints`. Then, call `python roc.py` to generate the ROC curves. 
