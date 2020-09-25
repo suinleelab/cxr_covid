@@ -11,7 +11,7 @@ Datasets can be downloaded at the following links:<br/>
 [PadChest](https://bimcv.cipf.es/bimcv-projects/padchest/)<br/>
 
 ## Setting up the datasets
-While we provide code to load radiographs and associated metadata for training a deep-learning model, you will first need to download images from the above repositories. Be aware that these repositories combine to multiple terabytes of data. 
+While we provide code to load radiographs and associated metadata for training a deep-learning model, you will first need to download images from the above repositories. Be aware that these repositories amount to multiple terabytes of data. 
 
 Organize the downloaded data as follows:
 
