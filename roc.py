@@ -118,21 +118,21 @@ def main():
     ds1_auroc_list = numpy.array(ds1_auroc_list)
     ds2_auroc_list = numpy.array(ds2_auroc_list)
     print("Statistics for models trained on dataset I:")
-    print("Dataset ROC-AUC +/- std: ", ds1_auroc_list.mean(), ds1_auroc_list.std(ddof=1))
-    print("BIMCV ROC-AUC +/- std: ", ds2_auroc_list.mean(), ds2_auroc_list.std(ddof=1))
+    print("Dataset I ROC-AUC +/- std: ", ds1_auroc_list.mean(), " +/- ", ds1_auroc_list.std(ddof=1))
+    print("Dataset II ROC-AUC +/- std: ", ds2_auroc_list.mean(), " +/- ", ds2_auroc_list.std(ddof=1))
 
     # Calculations for models trained on dataset 2
     ds1_auroc_list = []
     ds2_auroc_list = []
-    for i, (path, seed) in enumerate(zip(ds2padchest_checkpoints, ds2_seeds)):
+    for i, (path, seed) in enumerate(zip(ds2_checkpoints, ds2_seeds)):
         ds1_auroc, ds2_auroc = plot(ax1, path, seed, legend=(True if i==0 else False))
         ds1_auroc_list.append(ds1_auroc)
         ds2_auroc_list.append(ds2_auroc)
     ds1_auroc_list = numpy.array(ds1_auroc_list)
     ds2_auroc_list = numpy.array(ds2_auroc_list)
     print("Statistics for models trained on dataset II:")
-    print("Dataset ROC-AUC +/- std: ", ds1_auroc_list.mean(), ds1_auroc_list.std(ddof=1))
-    print("BIMCV ROC-AUC +/- std: ", ds2_auroc_list.mean(), ds2_auroc_list.std(ddof=1))
+    print("Dataset I ROC-AUC +/- std: ", ds1_auroc_list.mean(), " +/- ", ds1_auroc_list.std(ddof=1))
+    print("Dataset II ROC-AUC +/- std: ", ds2_auroc_list.mean(), " +/- ", ds2_auroc_list.std(ddof=1))
 
     ax0.set_ylabel('True positive rate')
     dummy_ax = fig.add_subplot(111, frameon=False)
