@@ -10,6 +10,17 @@ Datasets can be downloaded at the following links:<br/>
 [BIMCV-COVID-19 +](https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/)<br/>
 [PadChest](https://bimcv.cipf.es/bimcv-projects/padchest/)<br/>
 
+## System requirements
+This software was originally designed and run on a system running CentOS 7.8.2003, with Python 3.8, PyTorch 1.4, and CUDA 10.1. For a full list of software packages and version numbers, see the Conda environment file `environment.yml`. 
+
+This software leverages graphical processing units (GPUs) to accelerate neural network training and evaluation; systems lacking a suitable GPU will likely take an extremely long time to train or evaluate models. The software was tested with the NVIDIA RTX 2080 TI GPU, though we anticipate that other GPUs will also work, provided that the unit offers sufficient memory (networks may consume upward of 8 GB). 
+
+## Installation guide
+We recommend installation of the required packages using the Conda package manager, available through the Anaconda Python distribution. Anaconda is available free of charge for non-commercial use through [Anaconda Inc](https://www.anaconda.com/products/individual). After installing Anaconda and cloning this repository, use the `conda` command to install necessary packages:
+    conda env create -f environment.yml
+
+Total install time is approximately 30 minutes, including 15 minutes for installation of Anaconda and 15 minutes for installation of the required packages. Beyond downloading this repository, no addition time is required for its installation. 
+
 ## Setting up the datasets
 While we provide code to load radiographs and associated metadata for training a deep-learning model, you will first need to download images from the above repositories. Be aware that these repositories amount to multiple terabytes of data. 
 
