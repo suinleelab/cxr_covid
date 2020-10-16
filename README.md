@@ -89,7 +89,7 @@ Check to make sure the output files are organized as follows:
             BIMCV-COVID-19.h5
 
 ## Training the models
-After setting up the datasets, train models using the `train_covid.py` script. This script works via the command line; for more information on using the script, run `python train_covid.py --help`. 
+After setting up the datasets, train models using the `train_covid.py` script. This script works via the command line; for more information on using the script, run `python train_covid.py --help`. The expected training time for a single replicate on an NVIDIA RTX 2080 TI is approximately 5 hours.    
 
 ## Evaluating the models
-Once you have trained models on both datasets, evaluate the models using the script `roc.py`. This will calculate receiver operating characteristic curves for both internal and external test data. First, edit the "options" section of `roc.py` to match the output paths from model training; the checkpoint files may be found in `./checkpoints`. Then, call `python roc.py` to generate the ROC curves. 
+Once you have trained models on both datasets, evaluate the models using the script `roc.py`. This will calculate receiver operating characteristic curves for both internal and external test data. First, edit the "options" section of `roc.py` to match the output paths from model training; the checkpoint files may be found in `./checkpoints`. Then, call `python roc.py` to generate the ROC curves. The outputs of the `roc.py` script are expected to be similar to Fig. 1c in our manuscript.
