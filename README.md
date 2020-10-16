@@ -17,7 +17,7 @@ This software leverages graphical processing units (GPUs) to accelerate neural n
 
 ## Installation guide
 We recommend installation of the required packages using the Conda package manager, available through the Anaconda Python distribution. Anaconda is available free of charge for non-commercial use through [Anaconda Inc](https://www.anaconda.com/products/individual). After installing Anaconda and cloning this repository, use the `conda` command to install necessary packages:
-    conda env create -f environment.yml
+    `conda env create -f environment.yml`
 
 Total install time is approximately 30 minutes, including 15 minutes for installation of Anaconda and 15 minutes for installation of the required packages. Beyond downloading this repository, no addition time is required for its installation. 
 
