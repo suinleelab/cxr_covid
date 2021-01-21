@@ -9,6 +9,9 @@ Datasets can be downloaded at the following links:<br/>
 **Dataset II**<br/>
 [BIMCV-COVID-19 +](https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/)<br/>
 [PadChest](https://bimcv.cipf.es/bimcv-projects/padchest/)<br/>
+<br/>
+**Dataset III**<br/>
+[BIMCV-COVID-19 −](https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/)<br/>
 
 ## System requirements
 This software was originally designed and run on a system running CentOS 7.8.2003, with Python 3.8, PyTorch 1.4, and CUDA 10.1. For a full list of software packages and version numbers, see the Conda environment file `environment.yml`. 
@@ -74,7 +77,7 @@ Since the json files that contain metadata regarding the BIMCV-COVID-19+ radiogr
     cd ./data
     python make_csv_bimcv_positive.py 
 
-### BIMCV-COVID19-
+### BIMCV-COVID19−
 The download process is similar to that of BIMCV-COVID19+. Download all of the zip files, which contain both the images and metadata. Place all of the zip files in `./data/bimcv-` and extract them. You should end up with a subdirectory named "derivatives" which includes some of the metadata, as well as many folders named "sub-SXXXXX" (where XXXXX is a number) which contain the images and more metadata.
 
 Since the json files that contain metadata regarding the BIMCV-COVID-19- radiographs can be unwieldy to work with, parse them to create a csv file that contains key metadata:
@@ -111,3 +114,5 @@ After setting up the datasets, train models using the `train_covid.py` script. T
 
 ## Evaluating the models
 Once you have trained models on both datasets, evaluate the models using the script `roc.py`. This will calculate receiver operating characteristic curves for both internal and external test data. First, edit the "options" section of `roc.py` to match the output paths from model training; the checkpoint files may be found in `./checkpoints`. Then, call `python roc.py` to generate the ROC curves. The outputs of the `roc.py` script are expected to be similar to Fig. 1c in our manuscript.
+
+To examine the performance of models trained on dataset III, you will need to use the separate `roc_bimcv.py` script. Similar to the main `roc.py` script, open the file and edit the options section to point to the checkpoint files of your models trained on dataset III. Then, call `python roc_bimcv.py` to generate the ROC curves. The outputs of the `roc.py` script are expected to be similar to Fig. 5 in our manuscript. 
