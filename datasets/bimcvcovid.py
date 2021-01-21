@@ -90,7 +90,7 @@ class BIMCVCOVIDDataset(H5Dataset, CXRDataset):
     def __init__(self, fold, random_state=30493, include_lateral=False, 
                  include_unknown_projections=False, include_ap_supine=False,
                  include_unknown_labels=False, initialize_h5=False, covid_labels='molecular',
-                 labels='chexpert', ):
+                 labels='chexpert', projection=None):
         '''
         covid_labels (str): if 'molecular', the COVID label associated with each
           image will be based on molecular assay results (PCR or serology); all 
@@ -140,17 +140,12 @@ class BIMCVCOVIDDataset(H5Dataset, CXRDataset):
             padchesttochestxray14['viral pneumonia'] = 'COVID-19'
             padchesttochexpert['viral pneumonia'] = 'COVID-19'
         self.report_regex = re.compile('ses-E\d+')
-        self.datapath = 'data/BIMCV-COVID-19'
-        self.labelpath = 'derivatives/labels/labels_covid19_posi.tsv'
-        self.unknown_label_path = 'datasets/bimcv_covid_unknown_labels.txt'
-        self.labeldf = pandas.read_csv(os.path.join(self.datapath, self.labelpath), delimiter='\t')
-        self.h5path = 'data/BIMCV-COVID-19/BIMCV-COVID-19.h5'
-        self.df = pandas.read_csv(os.path.join(self.datapath, 'BIMCV-COVID-19.csv'))
+        self._set_datapaths()
         # Filter images with windowing data
         self.df = self.df.query('window_center == window_center | lut == lut') # remove NaN
         self.df.lut = self.df.lut.apply(lambda x: eval(x) if isinstance(x,str) else x) # strings to LUT lists
         if include_unknown_projections: # unlabeled projections
-            with open("datasets/bimcv_covid_manual_projection_labels.yml", 'r') as handle:
+            with open(self.manual_projection_label_path, 'r') as handle:
                 projection_labels = yaml.load(handle)
             unknowns = self.df.query("projection == 'UNK'")
             for idx, row in unknowns.iterrows():
@@ -180,17 +175,41 @@ class BIMCVCOVIDDataset(H5Dataset, CXRDataset):
                     test_size=0.05)
             if fold == 'train' or fold == 'val':
                 traindf, valdf = grouped_split(
-                        trainvaldf, 
+                        trainvaldf,
                         random_state=random_state,
                         test_size=0.05)
                 if fold == 'train':
                     self.df = traindf
+                    if projection is not None:
+                        if projection == 'AP':
+                            self.df = self.df[self.df.projection == 'AP']
+                        elif projection == 'PA':
+                            self.df = self.df[self.df.projection == 'PA']
                 elif fold == 'val':
                     self.df = valdf
+                    if projection is not None:
+                        if projection == 'AP':
+                            self.df = self.df[self.df.projection == 'AP']
+                        elif projection == 'PA':
+                            self.df = self.df[self.df.projection == 'PA']
             elif fold == 'test':
                 self.df = testdf
+                if projection is not None:
+                    if projection == 'AP':
+                        self.df = self.df[self.df.projection == 'AP']
+                    elif projection == 'PA':
+                        self.df = self.df[self.df.projection == 'PA']
         if initialize_h5:
             self.init_worker(None)
+
+    def _set_datapaths(self):
+        self.datapath = 'data/bimcv+'
+        self.labelpath = 'derivatives/labels/labels_covid19_posi.tsv'
+        self.unknown_label_path = 'datasets/bimcv_covid_unknown_labels.txt'
+        self.labeldf = pandas.read_csv(os.path.join(self.datapath, self.labelpath), delimiter='\t')
+        self.h5path = 'data/bimcv+/bimcv+.h5'
+        self.df = pandas.read_csv(os.path.join(self.datapath, 'bimcv+.csv'))
+        self.manual_projection_label_path = "datasets/bimcv_covid_manual_projection_labels.yml"
 
     def init_worker(self, worker_id):
         self.h5 = h5py.File(self.h5path, 'r', swmr=True)
@@ -258,6 +277,12 @@ class BIMCVCOVIDDataset(H5Dataset, CXRDataset):
         image = Image.open(io.BytesIO(numpy.array(data)))
         return image
 
+    def add_covid_label(self, findings):
+        # ALL samples are covid-19+
+        if not 'COVID 19' in findings:
+            findings.append('COVID 19')
+        return findings
+
     def get_labels(self, idx):
         '''
         Get the labels for index ``idx``.
@@ -267,10 +292,7 @@ class BIMCVCOVIDDataset(H5Dataset, CXRDataset):
         '''
         findings = self._parse_labels(idx)
         if self.covid_labels == 'molecular':
-            # ALL samples are covid-19+
-            if not 'COVID 19' in findings:
-                findings.append('COVID 19')
-
+            findings = self.add_covid_label(findings)
         if self.labelstyle == 'chexpert':
             map_ = padchesttochexpert
         elif self.labelstyle == 'chestx-ray14':

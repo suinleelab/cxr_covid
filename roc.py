@@ -27,7 +27,8 @@ import sys
 
 #################################### Options ##################################
 # Modify to match the output files from your training procedure. The random
-# seeds are automatically parsed from the file names.
+# seeds are automatically parsed from the file names, and must be the same for
+# the two datasets!
 
 # Models trained on dataset I
 ds1_checkpoints = \

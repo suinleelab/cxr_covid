@@ -8,5 +8,6 @@ from datasets.padchesth5 import PadChestH5Dataset
 
 from datasets.githubcovid import GitHubCOVIDDataset
 from datasets.bimcvcovid import BIMCVCOVIDDataset
+from datasets.bimcvnegative import BIMCVNegativeDataset
 
 from datasets.domainconfoundeddatasets import DomainConfoundedDataset

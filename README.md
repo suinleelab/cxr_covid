@@ -42,10 +42,17 @@ Organize the downloaded data as follows:
             PADCHEST_chest_x_ray_images_labels_160K_01.02.19.csv
             images/
                 (many image files)
-        BIMCV-COVID-19
+        bimcv+ 
             participants.tsv
             derivatives/
                 labels/
+                    labels_covid19_posi.tsv
+            sub-S0*/
+                (subdirectories containing png images and json metadata)
+        bimcv-
+            participants.tsv
+            derivatives/
+                labels
                     labels_covid19_posi.tsv
             sub-S0*/
                 (subdirectories containing png images and json metadata)
@@ -60,12 +67,20 @@ Simply clone the repository and rename it as `./data/GitHub-COVID`.
 Download each of the image zip files as well as the csv file containing metadata. Extract all of the images and organize them into a single directory at `./data/PadChest/images`.
 
 ### BIMCV-COVID19+
-Download all of the zip files, which contain both the images and metadata. Place all of the zip files in `./data/BIMCV-COVID-19` and extract them. You should end up with a subdirectory named "derivatives" which includes some of the metadata, as well as many folders named "sub-SXXXXX" (where XXXXX is a number) which contain the images and more metadata.
+Download all of the zip files, which contain both the images and metadata. Place all of the zip files in `./data/bimcv+` and extract them. You should end up with a subdirectory named "derivatives" which includes some of the metadata, as well as many folders named "sub-SXXXXX" (where XXXXX is a number) which contain the images and more metadata.
 
 Since the json files that contain metadata regarding the BIMCV-COVID-19+ radiographs can be unwieldy to work with, parse them to create a csv file that contains key metadata:
 
     cd ./data
-    python make_csv.py 
+    python make_csv_bimcv_positive.py 
+
+### BIMCV-COVID19-
+The download process is similar to that of BIMCV-COVID19+. Download all of the zip files, which contain both the images and metadata. Place all of the zip files in `./data/bimcv-` and extract them. You should end up with a subdirectory named "derivatives" which includes some of the metadata, as well as many folders named "sub-SXXXXX" (where XXXXX is a number) which contain the images and more metadata.
+
+Since the json files that contain metadata regarding the BIMCV-COVID-19- radiographs can be unwieldy to work with, parse them to create a csv file that contains key metadata:
+
+    cd ./data #(if not already in the ./data directory)
+    python make_csv_bimcv_negative.py 
 
 ### HDF5 Files
 
@@ -76,7 +91,8 @@ To generate the files, run the following commands:
     cd ./data
     python make_h5.py -i ChestX-ray14 -o ChestX-ray14/chestxray14.h5
     python make_h5.py -i PadChest -o PadChest/padchest.h5
-    python make_h5.py -i BIMCV-COVID-19 -o BIMCV-COVID-19/BIMCV-COVID-19.h5 
+    python make_h5.py -i bimcv+ -o bimcv+/bimcv+.h5 
+    python make_h5.py -i bimcv- -o bimcv-/bimcv-.h5 
 
 Check to make sure the output files are organized as follows:
 
@@ -85,8 +101,10 @@ Check to make sure the output files are organized as follows:
             chestxray14.h5
         PadChest/
             padchest.h5
-        BIMCV-COVID-19
-            BIMCV-COVID-19.h5
+        bimcv+ 
+            bimcv+.h5
+        bimcv-
+            bimcv-.h5
 
 ## Training the models
 After setting up the datasets, train models using the `train_covid.py` script. This script works via the command line; for more information on using the script, run `python train_covid.py --help`. The expected training time for a single replicate on an NVIDIA RTX 2080 TI is approximately 5 hours.    
