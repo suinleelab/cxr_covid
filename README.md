@@ -11,6 +11,7 @@ Datasets can be downloaded at the following links:<br/>
 [PadChest](https://bimcv.cipf.es/bimcv-projects/padchest/)<br/>
 <br/>
 **Dataset III**<br/>
+[BIMCV-COVID-19 +](https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/)<br/>
 [BIMCV-COVID-19 −](https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/)<br/>
 
 ## System requirements
@@ -56,7 +57,7 @@ Organize the downloaded data as follows:
             participants.tsv
             derivatives/
                 labels
-                    labels_covid19_posi.tsv
+                    labels_SARS-cov-2_nega.tsv
             sub-S0*/
                 (subdirectories containing png images and json metadata)
 
