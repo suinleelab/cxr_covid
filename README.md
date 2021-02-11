@@ -65,7 +65,7 @@ Organize the downloaded data as follows:
 Download the files listed above under `./data/ChestX-ray14/.` You will need to download and extract all of the zip files from the images directory and organize all of the images into a single directory (`./data/Chestx-ray14/images`). Note that some file names may change (e.g., `Data_Entry_2017.csv` may have been renamed to `Data_Entry_2017_v2020.csv` depending on your download date). It is important that you rename files to match the above scheme.
 
 ### Cohen et al. Covid-Chestxray-Dataset (a.k.a. "GitHub-COVID" in our manuscript)
-Simply clone the repository and rename it as `./data/GitHub-COVID`.
+Simply clone the repository, check out the following specific revision (`git checkout 9b9c2d5`) and rename the directory as `./data/GitHub-COVID`.
 
 ### PadChest
 Download each of the image zip files as well as the csv file containing metadata. Extract all of the images and organize them into a single directory at `./data/PadChest/images`.
